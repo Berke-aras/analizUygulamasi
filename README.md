@@ -1,74 +1,116 @@
-Trading Assistant Uygulaması
+Tabii! Aşağıda GitHub README dosyanız için önerilen bir metin bulunmaktadır. Bu README, projenizin temel işlevselliğini, kurulum ve kullanım adımlarını açıklar, ayrıca projenizin sunduğu özellikleri anlatır.
 
-Bu uygulama, Flask tabanlı bir web servisi olarak çalışır ve hem teknik analiz hem de haber analizi yaparak döviz, altın veya Borsa İstanbul gibi finansal enstrümanlar için al/sat/nötr tavsiyeleri üretir.
-İçerik
+---
 
-    Özellikler
+# 📊 Analiz Uygulaması
 
-    Teknolojiler
+Bu proje, finansal piyasalarda kullanılan teknik analiz araçlarını ve haber analizi ile desteklenmiş karar mekanizmalarını birleştirerek, kullanıcıya yatırım tavsiyesi ve piyasa analizleri sunan bir web uygulamasıdır. Uygulama, döviz kuru, altın fiyatları, Borsa İstanbul gibi finansal enstrümanlar için veri toplar, analiz eder ve kullanıcıya önerilerde bulunur.
 
-    Kurulum
+🔗 **[Proje GitHub Sayfası](https://github.com/Berke-aras/analizUygulamasi)**
 
-    Örnek Çıktı
+---
 
-Özellikler
+## 🚀 Özellikler
 
-    Haber Analizi: Haber API’si (NewsAPI) kullanılarak çekilen haber verileri, Türkçe stop-word filtresi ve duygu analizi algoritmaları ile işlenir.
+- **Teknik Analiz:**
+  - **EMA (Exponential Moving Average)**, **RSI (Relative Strength Index)**, **MACD (Moving Average Convergence Divergence)** gibi göstergelerle piyasa analizi.
+  - Piyasa volatilitesine göre uygun al/sat kararları.
+  
+- **Haber Analizi:**
+  - Türkçe haber metinlerini analiz ederek, olumsuz veya olumlu haberleri ayıran duygu analizi.
+  - Analizler, haber başlıkları ve açıklamalarıyla birlikte sunulur.
 
-    Teknik Analiz:
+- **Gelişmiş Karar Mekanizması:**
+  - Teknik ve haber analizlerinin birleştirilerek, al/sat/nötr kararlarının verilmesi.
+  - Piyasa trendine ve volatiliteye dayalı karar destek sistemi.
 
-        EMA (Üssel Hareketli Ortalama)
+- **Web Arayüzü:**
+  - Flask tabanlı bir web uygulaması ile analizleri görsel olarak sunma.
+  - Kullanıcı, istediği para birimi veya finansal enstrüman için analiz alabilir.
 
-        RSI (Göreceli Güç Endeksi)
+---
 
-        MACD (Hareketli Ortalama Yakınsaması/Uzaklaşması)
+## 🛠️ Teknolojiler
 
-        Ek göstergeler (momentum, volatilite) ile harmanlanmış analiz.
+- **Python**: Backend uygulamaları için ana programlama dili.
+- **Flask**: Web framework, API ve arayüz oluşturmak için kullanıldı.
+- **yfinance**: Finansal veri çekmek için Yahoo Finance API'si.
+- **NewsAPI**: Güncel haberleri almak için.
+- **NumPy**: Sayısal hesaplamalar ve analizler.
+- **Pandas**: Veri işleme ve analizleri için.
+- **re**: Metin işleme (regex ile).
+- **Matplotlib/Plotly (isteğe bağlı)**: Verilerin görselleştirilmesi (grafik oluşturma).
 
-    Karar Mekanizması: Teknik ve haber skorlarına dayanarak “AL”, “SAT” veya “NÖTR” gibi işlem önerileri sunar.
+---
 
-    Grafik Verisi: Son 60 güne ait fiyat grafiği verileri JSON formatında sunulur.
+## 🔧 Kurulum
 
-    Haber Özeti: İlk 10 haber, kaynak bilgileriyle birlikte özetlenir.
+1. **Python ve gerekli kütüphaneleri kurun:**
 
-Teknolojiler
+   Uygulamanın çalışabilmesi için Python 3.7+ ve bazı kütüphanelere ihtiyacınız olacak. Gerekli kütüphaneleri `requirements.txt` dosyasından yükleyebilirsiniz.
 
-    Python
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-    Flask
+2. **NewsAPI anahtarınızı alın:**
 
-    yfinance
+   [NewsAPI](https://newsapi.org/) üzerinden bir API anahtarı alın ve `NEWS_API_KEY` değişkenine yerleştirin.
 
-    Pandas & NumPy
+3. **Flask Uygulamasını Çalıştırın:**
 
-    NewsAPI
+   Flask uygulamanızı başlatmak için aşağıdaki komutu kullanın:
 
-    Regex (re modülü)
+   ```bash
+   python app.py
+   ```
 
+   Uygulama, varsayılan olarak `http://localhost:5000` adresinde çalışacaktır.
 
-Eğer requirements.txt dosyanız yoksa aşağıdaki paketleri yükleyebilirsiniz:
+---
 
-    pip install flask requests yfinance numpy pandas
+## ⚙️ Kullanım
 
-    API Anahtarını Ayarlayın:
+Uygulamanın ana endpoint'i `/predict`'tir. Buradan, döviz kuru, altın fiyatları gibi finansal enstrümanlar için analiz alabilirsiniz.
 
-    Uygulama içindeki NEWS_API_KEY değişkenine NewsAPI üzerinden aldığınız API anahtarınızı girin.
+### Örnek Kullanım:
 
-Kullanım
+**GET İsteği:**
+- URL: `http://localhost:5000/predict?currency=dolar`
 
-    Uygulamayı Başlatın:
+Bu istek, döviz kuru (USD/TRY) için teknik analiz yapacak ve ilgili haberlerle birlikte yatırım tavsiyesi verecektir.
 
-python app.py
+---
 
-Web Tarayıcınızdan Erişin:
+## 🎯 Yapılacaklar
 
-Uygulama, varsayılan olarak http://127.0.0.1:5000 adresinde çalışacaktır.
+- [ ] Uygulama için kullanıcı dostu bir frontend arayüzü geliştirilmesi.
+- [ ] Farklı finansal enstrümanlar için daha geniş veri kümesi entegrasyonu.
+- [ ] Duygu analizi ve teknik analizlerin daha sofistike hale getirilmesi.
+- [ ] Uygulama optimizasyonları ve hata ayıklamaları.
 
+---
 
+## 💡 Katkı Sağlama
 
-Katkıda Bulunma
+Katkıda bulunmak için aşağıdaki adımları takip edebilirsiniz:
 
-Katkılarınızı bekliyoruz! Lütfen bir pull request gönderin veya issue açın. Her türlü öneri ve geri bildirim değerlidir.
-Lisans
+1. Repo'yu forklayın.
+2. Yapmak istediğiniz değişiklikleri yeni bir branch üzerinde gerçekleştirin.
+3. Pull request (PR) gönderin.
 
-Bu proje MIT Lisansı altında lisanslanmıştır.
+---
+
+## 📜 Lisans
+
+Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
+
+---
+
+## 💬 İletişim
+
+Proje hakkında sorularınız veya önerileriniz varsa, lütfen GitHub Issues bölümünden bize ulaşın veya [berkearas@example.com](mailto:berkearas@example.com) adresinden iletişime geçin.
+
+---
+
+Eğer proje hakkında başka bir şeyler eklemek isterseniz, sorabilirsiniz.
