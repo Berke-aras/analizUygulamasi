@@ -45,16 +45,6 @@ Teknolojiler
 
     Regex (re modülü)
 
-Kurulum
-
-    Repository’yi Klonlayın:
-
-git clone https://github.com/kullaniciadi/trading-assistant.git
-cd trading-assistant
-
-Gerekli Python Paketlerini Yükleyin:
-
-pip install -r requirements.txt
 
 Eğer requirements.txt dosyanız yoksa aşağıdaki paketleri yükleyebilirsiniz:
 
