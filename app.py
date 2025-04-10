@@ -133,7 +133,7 @@ def calculate_rsi(prices, period=14):
         avg_loss = (avg_loss*(period-1) + losses[i]) / period
     
     rs = avg_gain / (avg_loss + 1e-10)
-    return 100 - (100/(1 + rs))
+    return float(100 - (100/(1 + rs)))
 
 def calculate_macd(prices):
     """
@@ -177,8 +177,8 @@ def analyze_chart(price_history):
         ema200 = calculate_ema(price_history, 200) or 1  # Sıfıra bölmeyi önlemek için
         
         indicators = {
-            'rsi': calculate_rsi(price_history),
-            'macd': calculate_macd(price_history),
+            'rsi': float(calculate_rsi(price_history)),
+            'macd': float(calculate_macd(price_history)),
             '50_200_ema': ema50 / ema200 if ema200 != 0 else 1,
             'momentum': (price_history[-1]/price_history[-14] - 1)*100 if len(price_history) >= 14 else 0,
             'volatility': np.std(price_history[-30:]) / np.mean(price_history[-30:]) if len(price_history) >= 30 else 0
@@ -377,9 +377,9 @@ def predict():
             'para_birimi': display_currency,
             'sembol': ticker,
             'isim': display_name,
-            'güncel_fiyat': round(price_history[-1], 2),
-            'teknik_skor': round(tech_score, 2),
-            'haber_skoru': round(news_score, 2),
+            'güncel_fiyat': float(round(price_history[-1], 2)),  # numpy tipi varsa çevir
+            'teknik_skor': float(round(tech_score, 2)),
+            'haber_skoru': float(round(news_score, 2)),
             'tavsiye': action,
             'piyasa_durumu': market_condition,
             'göstergeler': {
@@ -485,9 +485,8 @@ def detect_support_resistance(price_history, window=10):
     
     # En yakın 3 seviyeyi al
     current_price = price_history[-1]
-    supports = sorted([s for s in supports if s < current_price], reverse=True)[:3]
-    resistances = sorted([r for r in resistances if r > current_price])[:3]
-    
+    supports = [float(s) for s in supports[:3]]
+    resistances = [float(r) for r in resistances[:3]]
     return supports, resistances
 
 def calculate_bollinger_bands(price_history, window=20, num_std=2):
@@ -606,7 +605,7 @@ def calculate_stochastic_oscillator(price_history, high_history=None, low_histor
     else:
         d_percent = k_percent
     
-    return k_percent, d_percent
+    return float(k_percent), float(d_percent)
 
 def identify_market_condition(price_history):
     """
@@ -748,20 +747,23 @@ def analyze_opportunity(price_history, tech_score, news_score):
     
     return {
         "signal": final_signal,
-        "strength": signal_strength,
+        "strength": float(signal_strength),  # numpy float'ı Python float'a çevir
         "market_condition": market_condition,
-        "rsi": rsi,
-        "stochastic": {"k": stoch_k, "d": stoch_d},
+        "rsi": float(rsi),  # numpy.float64 -> float
+        "stochastic": {
+            "k": float(stoch_k), 
+            "d": float(stoch_d)
+        },
         "bollinger": {
-            "sma": sma,
-            "upper": upper_band,
-            "lower": lower_band
+            "sma": float(sma) if sma is not None else None,
+            "upper": float(upper_band) if upper_band is not None else None,
+            "lower": float(lower_band) if lower_band is not None else None
         },
         "targets": {
-            "support": next_support,
-            "resistance": next_resistance,
-            "stop_loss": next_support * 0.98,
-            "take_profit": next_resistance * 1.02
+            "support": float(next_support),
+            "resistance": float(next_resistance),
+            "stop_loss": float(next_support * 0.98),
+            "take_profit": float(next_resistance * 1.02)
         },
         "reasons": reasons
     }
