@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Finansal Analiz Platformu</title>
+        <title>Gelişmiş Finansal Analiz Platformu</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -14,12 +14,16 @@
         />
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
         <style>
             :root {
                 --bg-dark: #1a1a1a;
                 --card-bg: #2d2d2d;
                 --accent: #00ff88;
+                --accent-secondary: #ff7b00;
                 --text-primary: #ffffff;
+                --border-color: #3d3d3d;
             }
 
             body {
@@ -31,7 +35,7 @@
             .card-custom {
                 background: var(--card-bg);
                 border-radius: 15px;
-                border: 1px solid #3d3d3d;
+                border: 1px solid var(--border-color);
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
                 transition: transform 0.3s ease;
             }
@@ -46,6 +50,20 @@
                 padding: 12px 25px;
                 border-radius: 8px;
                 font-weight: 600;
+                color: #000;
+            }
+
+            .btn-secondary-accent {
+                background: linear-gradient(
+                    45deg,
+                    var(--accent-secondary),
+                    #e67100
+                );
+                border: none;
+                padding: 12px 25px;
+                border-radius: 8px;
+                font-weight: 600;
+                color: #fff;
             }
 
             .result-badge {
@@ -56,6 +74,7 @@
 
             .buy {
                 background: linear-gradient(45deg, #00ff88, #00cc6a);
+                color: #000;
             }
 
             .sell {
@@ -103,34 +122,157 @@
                 height: 300px;
                 position: relative;
             }
+
+            .nav-tabs {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-tabs .nav-link {
+                color: var(--text-primary);
+                border: none;
+                border-bottom: 3px solid transparent;
+                background: transparent;
+                padding: 10px 15px;
+            }
+
+            .nav-tabs .nav-link.active {
+                color: var(--accent);
+                background: transparent;
+                border-bottom: 3px solid var(--accent);
+            }
+
+            .nav-tabs .nav-link:hover:not(.active) {
+                border-color: var(--accent-secondary);
+                color: var(--accent-secondary);
+            }
+
+            /* Özel arama kutusu */
+            .search-box {
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                overflow: hidden;
+                background: #222;
+                transition: all 0.3s ease;
+            }
+
+            .search-box:focus-within {
+                box-shadow: 0 0 0 2px var(--accent);
+            }
+
+            .search-box input {
+                background: transparent;
+                border: none;
+                color: white;
+                padding: 12px;
+            }
+
+            .search-box input:focus {
+                outline: none;
+            }
+
+            /* Özel bilgi kutusu */
+            .info-box {
+                border-left: 4px solid var(--accent);
+                background: rgba(0, 255, 136, 0.1);
+                padding: 10px 15px;
+                margin: 15px 0;
+                border-radius: 0 8px 8px 0;
+            }
+
+            .info-box.warning {
+                border-left-color: var(--accent-secondary);
+                background: rgba(255, 123, 0, 0.1);
+            }
+
+            .info-box.danger {
+                border-left-color: #ff4646;
+                background: rgba(255, 70, 70, 0.1);
+            }
         </style>
     </head>
     <body class="d-flex flex-column">
-        <div class="container my-auto py-5">
+        <div class="container my-4 py-4">
             <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-8">
+                <div class="col-md-11 col-lg-10">
                     <div class="card-custom p-4">
                         <h1 class="text-center mb-4 fw-bold">
-                            <i class="fas fa-chart-line me-2"></i>Akıllı Finans
-                            Analiz
+                            <i class="fas fa-chart-line me-2"></i>Gelişmiş
+                            Finans Analiz Platformu
                         </h1>
 
-                        <div class="input-group mb-4">
-                            <select
-                                class="form-select bg-dark text-white"
-                                id="currencySelect"
-                            >
-                                <option value="dolar">Dolar (USD/TRY)</option>
-                                <option value="euro">Euro (EUR/TRY)</option>
-                                <option value="altın">Altın (Gram)</option>
-                                <option value="bist">BIST 100</option>
-                            </select>
-                            <button class="btn btn-accent" onclick="analyze()">
-                                <span id="spinner" class="loading-spinner"
-                                    ><i class="fas fa-spinner"></i
-                                ></span>
-                                <span id="buttonText">Analiz Yap</span>
-                            </button>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <h5>
+                                    <i class="fas fa-coins me-2"></i>Piyasa
+                                    İzleme
+                                </h5>
+                                <div class="input-group">
+                                    <select
+                                        class="form-select bg-dark text-white"
+                                        id="currencySelect"
+                                    >
+                                        <option value="dolar">
+                                            Dolar (USD/TRY)
+                                        </option>
+                                        <option value="euro">
+                                            Euro (EUR/TRY)
+                                        </option>
+                                        <option value="altın">
+                                            Altın (Gram)
+                                        </option>
+                                        <option value="gümüş">Gümüş</option>
+                                        <option value="platin">Platin</option>
+                                        <option value="bist">BIST 100</option>
+                                        <option value="petrol">
+                                            Petrol (Brent)
+                                        </option>
+                                        <option value="nasdaq">NASDAQ</option>
+                                        <option value="sp500">S&P 500</option>
+                                        <option value="dow">Dow Jones</option>
+                                    </select>
+                                    <button
+                                        class="btn btn-accent"
+                                        onclick="analyze()"
+                                    >
+                                        <span
+                                            id="spinner"
+                                            class="loading-spinner"
+                                            ><i class="fas fa-spinner"></i
+                                        ></span>
+                                        <span id="buttonText">Analiz Yap</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5>
+                                    <i class="fas fa-search me-2"></i>Hisse
+                                    Senedi Arama
+                                </h5>
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        class="form-control bg-dark text-white"
+                                        id="stockSearch"
+                                        placeholder="Hisse senedi ara (örn: AAPL, TSLA, MSFT)"
+                                    />
+                                    <button
+                                        class="btn btn-secondary-accent"
+                                        onclick="searchStock()"
+                                    >
+                                        <i class="fas fa-search me-1"></i> Ara
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box mb-3">
+                            <p class="mb-0">
+                                <i class="fas fa-info-circle me-2"></i>Mevcut ve
+                                tarihsel veriler kullanılarak oluşturulan
+                                analizler. Alım-satım sinyalleri risk
+                                toleransınıza göre değerlendirilmelidir.
+                            </p>
                         </div>
 
                         <div id="result" class="d-none">
@@ -143,67 +285,370 @@
                                     ></div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="card-custom p-3">
-                                        <h5>
-                                            <i class="fas fa-microchip me-2"></i
-                                            >Teknik Göstergeler
-                                        </h5>
-                                        <div class="mt-3">
-                                            <div>
-                                                Teknik Skor:
-                                                <span id="techScore"></span>
-                                            </div>
-                                            <div>
-                                                7 Günlük:
-                                                <span id="weekly"></span>
-                                            </div>
-                                            <div>
-                                                30 Günlük:
-                                                <span id="monthly"></span>
+                                <!-- Sekmeler ve İçerikleri -->
+                                <div class="col-12">
+                                    <ul
+                                        class="nav nav-tabs"
+                                        id="analysisTabs"
+                                        role="tablist"
+                                    >
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
+                                            <button
+                                                class="nav-link active"
+                                                id="summary-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#summary"
+                                                type="button"
+                                            >
+                                                Özet
+                                            </button>
+                                        </li>
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
+                                            <button
+                                                class="nav-link"
+                                                id="technical-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#technical"
+                                                type="button"
+                                            >
+                                                Teknik Analiz
+                                            </button>
+                                        </li>
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
+                                            <button
+                                                class="nav-link"
+                                                id="opportunity-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#opportunity"
+                                                type="button"
+                                            >
+                                                Fırsat Analizi
+                                            </button>
+                                        </li>
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
+                                            <button
+                                                class="nav-link"
+                                                id="news-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#news"
+                                                type="button"
+                                            >
+                                                Haberler
+                                            </button>
+                                        </li>
+                                    </ul>
+
+                                    <div
+                                        class="tab-content pt-3"
+                                        id="analysisTabsContent"
+                                    >
+                                        <!-- Özet Sekmesi -->
+                                        <div
+                                            class="tab-pane fade show active"
+                                            id="summary"
+                                            role="tabpanel"
+                                        >
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div
+                                                        class="card-custom p-3 mb-3"
+                                                    >
+                                                        <h5>
+                                                            <i
+                                                                class="fas fa-info-circle me-2"
+                                                            ></i
+                                                            >Temel Bilgiler
+                                                        </h5>
+                                                        <div class="mt-2">
+                                                            <div>
+                                                                Mevcut Fiyat:
+                                                                <span
+                                                                    id="currentPrice"
+                                                                    class="fw-bold"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                7 Günlük
+                                                                Değişim:
+                                                                <span
+                                                                    id="weekly"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                30 Günlük
+                                                                Değişim:
+                                                                <span
+                                                                    id="monthly"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Tavsiye:
+                                                                <span
+                                                                    id="recommendationSummary"
+                                                                    class="fw-bold"
+                                                                ></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div
+                                                        class="card-custom p-3 mb-3"
+                                                    >
+                                                        <h5>
+                                                            <i
+                                                                class="fas fa-chart-pie me-2"
+                                                            ></i
+                                                            >Skorlar
+                                                        </h5>
+                                                        <div class="mt-2">
+                                                            <div>
+                                                                Teknik Skor:
+                                                                <span
+                                                                    id="techScore"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Haber Skoru:
+                                                                <span
+                                                                    id="newsScore"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Piyasa Durumu:
+                                                                <span
+                                                                    id="marketCondition"
+                                                                ></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div
+                                                        class="chart-container"
+                                                    >
+                                                        <canvas
+                                                            id="priceChart"
+                                                        ></canvas>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <div class="card-custom p-3">
-                                        <h5>
-                                            <i class="fas fa-newspaper me-2"></i
-                                            >Haber Analizi
-                                        </h5>
-                                        <div class="mt-3">
-                                            <div>
-                                                Haber Skoru:
-                                                <span id="newsScore"></span>
+                                        <!-- Teknik Analiz Sekmesi -->
+                                        <div
+                                            class="tab-pane fade"
+                                            id="technical"
+                                            role="tabpanel"
+                                        >
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div
+                                                        class="card-custom p-3 mb-3"
+                                                    >
+                                                        <h5>
+                                                            <i
+                                                                class="fas fa-signal me-2"
+                                                            ></i
+                                                            >Teknik Göstergeler
+                                                        </h5>
+                                                        <div class="mt-2">
+                                                            <div>
+                                                                RSI (14):
+                                                                <span
+                                                                    id="rsiValue"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                MACD:
+                                                                <span
+                                                                    id="macdValue"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Stokastik %K:
+                                                                <span
+                                                                    id="stochK"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Stokastik %D:
+                                                                <span
+                                                                    id="stochD"
+                                                                ></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div
+                                                        class="card-custom p-3 mb-3"
+                                                    >
+                                                        <h5>
+                                                            <i
+                                                                class="fas fa-arrows-alt-v me-2"
+                                                            ></i
+                                                            >Destek/Direnç
+                                                        </h5>
+                                                        <div class="mt-2">
+                                                            <div>
+                                                                Destek
+                                                                Seviyeleri:
+                                                                <span
+                                                                    id="supportLevels"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Direnç
+                                                                Seviyeleri:
+                                                                <span
+                                                                    id="resistanceLevels"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Bollinger Üst:
+                                                                <span
+                                                                    id="bollingerUpper"
+                                                                ></span>
+                                                            </div>
+                                                            <div>
+                                                                Bollinger Alt:
+                                                                <span
+                                                                    id="bollingerLower"
+                                                                ></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 mt-3">
+                                                    <div class="info-box">
+                                                        <h6 class="mb-2">
+                                                            Teknik Analiz Yorumu
+                                                        </h6>
+                                                        <div
+                                                            id="technicalInterpretation"
+                                                        >
+                                                            Daha detaylı teknik
+                                                            analiz yorumu için
+                                                            analizi
+                                                            çalıştırınız.
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </div>
+
+                                        <!-- Fırsat Analizi Sekmesi -->
+                                        <div
+                                            class="tab-pane fade"
+                                            id="opportunity"
+                                            role="tabpanel"
+                                        >
+                                            <div class="card-custom p-3 mb-3">
+                                                <h5>
+                                                    <i
+                                                        class="fas fa-lightbulb me-2"
+                                                    ></i
+                                                    >Alım/Satım Fırsatları
+                                                </h5>
+                                                <div
+                                                    id="opportunitySignal"
+                                                    class="h4 mt-3 mb-3"
+                                                ></div>
+
+                                                <div class="mt-3">
+                                                    <h6>Sebepleri:</h6>
+                                                    <ul
+                                                        id="signalReasons"
+                                                        class="ps-3"
+                                                    ></ul>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-6">
+                                                        <h6>Hedef Fiyatlar</h6>
+                                                        <div>
+                                                            Destek:
+                                                            <span
+                                                                id="targetSupport"
+                                                            ></span>
+                                                        </div>
+                                                        <div>
+                                                            Direnç:
+                                                            <span
+                                                                id="targetResistance"
+                                                            ></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6>Risk Yönetimi</h6>
+                                                        <div>
+                                                            Stop-Loss:
+                                                            <span
+                                                                id="stopLoss"
+                                                            ></span>
+                                                        </div>
+                                                        <div>
+                                                            Kâr Al:
+                                                            <span
+                                                                id="takeProfit"
+                                                            ></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="info-box warning mt-3">
+                                                <p class="mb-0">
+                                                    <i
+                                                        class="fas fa-exclamation-triangle me-2"
+                                                    ></i
+                                                    >Bu analizler yatırım
+                                                    tavsiyesi değildir. Kendi
+                                                    araştırmanızı yapmanız ve
+                                                    risk yönetimi stratejinizi
+                                                    oluşturmanız önemlidir.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Haberler Sekmesi -->
+                                        <div
+                                            class="tab-pane fade"
+                                            id="news"
+                                            role="tabpanel"
+                                        >
+                                            <h5 class="mb-3">
+                                                <i
+                                                    class="fas fa-newspaper me-2"
+                                                ></i
+                                                >İlgili Haberler
+                                            </h5>
                                             <div
-                                                class="mt-2 text-muted small"
-                                                id="sentimentText"
+                                                id="newsContainer"
+                                                class="list-group"
                                             ></div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="mt-4">
-                                    <div class="chart-container">
-                                        <canvas id="priceChart"></canvas>
-                                    </div>
-                                </div>
-
-                                <div class="mt-4">
-                                    <h5>
-                                        <i class="fas fa-newspaper me-2"></i
-                                        >İlgili Haberler
-                                    </h5>
-                                    <div
-                                        class="news-carousel mt-3"
-                                        id="newsCarousel"
-                                    ></div>
-                                </div>
                             </div>
                         </div>
-
+                        <br />
+                        <div id="newsCarousel" class="news-carousel"></div>
                         <div
                             id="errorAlert"
                             class="alert alert-danger mt-3 d-none"
@@ -212,13 +657,14 @@
                 </div>
             </div>
         </div>
-
         <script>
             let chartInstance = null;
             let newsInterval = null;
 
-            async function analyze() {
+            // Gelişmiş analiz fonksiyonu güncellemesi
+            async function analyze(customSymbol = null) {
                 const currency =
+                    customSymbol ||
                     document.getElementById("currencySelect").value;
                 const resultDiv = document.getElementById("result");
                 const errorAlert = document.getElementById("errorAlert");
@@ -252,6 +698,129 @@
                     document.getElementById("monthly").textContent =
                         data.göstergeler["30_gunluk"];
 
+                    // Mevcut fiyat
+                    document.getElementById(
+                        "currentPrice"
+                    ).textContent = `${data.güncel_fiyat.toLocaleString()} ${
+                        data.para_birimi === "DOLAR" ? "TL" : ""
+                    }`;
+
+                    // Piyasa durumu
+                    if (data.piyasa_durumu) {
+                        document.getElementById("marketCondition").textContent =
+                            data.piyasa_durumu;
+                    }
+
+                    // Teknik göstergeler güncellemesi
+                    if (data.detaylı_teknik) {
+                        document.getElementById("rsiValue").textContent =
+                            data.detaylı_teknik.rsi?.toFixed(1) || "N/A";
+                        document.getElementById("macdValue").textContent =
+                            data.detaylı_teknik.macd?.toFixed(3) || "N/A";
+
+                        if (data.detaylı_teknik.stochastic) {
+                            document.getElementById("stochK").textContent =
+                                data.detaylı_teknik.stochastic.k?.toFixed(1) ||
+                                "N/A";
+                            document.getElementById("stochD").textContent =
+                                data.detaylı_teknik.stochastic.d?.toFixed(1) ||
+                                "N/A";
+                        }
+
+                        // Destek ve direnç seviyeleri
+                        if (
+                            data.detaylı_teknik.supports &&
+                            data.detaylı_teknik.supports.length
+                        ) {
+                            document.getElementById(
+                                "supportLevels"
+                            ).textContent = data.detaylı_teknik.supports
+                                .map((s) => s.toFixed(2))
+                                .join(", ");
+                        }
+
+                        if (
+                            data.detaylı_teknik.resistances &&
+                            data.detaylı_teknik.resistances.length
+                        ) {
+                            document.getElementById(
+                                "resistanceLevels"
+                            ).textContent = data.detaylı_teknik.resistances
+                                .map((r) => r.toFixed(2))
+                                .join(", ");
+                        }
+
+                        // Bollinger değerleri
+                        if (data.detaylı_teknik.bollinger) {
+                            document.getElementById(
+                                "bollingerUpper"
+                            ).textContent =
+                                data.detaylı_teknik.bollinger.upper?.toFixed(
+                                    2
+                                ) || "N/A";
+                            document.getElementById(
+                                "bollingerLower"
+                            ).textContent =
+                                data.detaylı_teknik.bollinger.lower?.toFixed(
+                                    2
+                                ) || "N/A";
+                        }
+                    }
+
+                    // Fırsat analizi güncellemesi
+                    if (data.fırsat_analizi) {
+                        document.getElementById(
+                            "opportunitySignal"
+                        ).textContent = data.fırsat_analizi.signal;
+                        document.getElementById(
+                            "recommendationSummary"
+                        ).textContent = data.fırsat_analizi.signal;
+
+                        // Sinyal sebepleri
+                        const reasonsList =
+                            document.getElementById("signalReasons");
+                        reasonsList.innerHTML = "";
+                        if (
+                            data.fırsat_analizi.reasons &&
+                            data.fırsat_analizi.reasons.length
+                        ) {
+                            data.fırsat_analizi.reasons.forEach((reason) => {
+                                const li = document.createElement("li");
+                                li.textContent = reason;
+                                reasonsList.appendChild(li);
+                            });
+                        }
+
+                        // Hedef fiyatlar
+                        if (data.fırsat_analizi.targets) {
+                            document.getElementById(
+                                "targetSupport"
+                            ).textContent =
+                                data.fırsat_analizi.targets.support?.toFixed(
+                                    2
+                                ) || "N/A";
+                            document.getElementById(
+                                "targetResistance"
+                            ).textContent =
+                                data.fırsat_analizi.targets.resistance?.toFixed(
+                                    2
+                                ) || "N/A";
+                            document.getElementById("stopLoss").textContent =
+                                data.fırsat_analizi.targets.stop_loss?.toFixed(
+                                    2
+                                ) || "N/A";
+                            document.getElementById("takeProfit").textContent =
+                                data.fırsat_analizi.targets.take_profit?.toFixed(
+                                    2
+                                ) || "N/A";
+                        }
+                    } else {
+                        document.getElementById(
+                            "recommendationSummary"
+                        ).textContent = data.tavsiye;
+                    }
+
+                    // Tavsiye badge'i güncellemesi
                     const recommendation =
                         document.getElementById("recommendation");
                     recommendation.className =
@@ -353,6 +922,60 @@
                     activeIndex = (activeIndex + 1) % items.length;
                     items[activeIndex].classList.add("active");
                 }, 5000);
+            }
+
+            // Hisse senedi arama fonksiyonu
+            async function searchStock() {
+                const query = document
+                    .getElementById("stockSearch")
+                    .value.trim();
+                if (!query) return;
+
+                const spinner = document.getElementById("spinner");
+                const buttonText = document.getElementById("buttonText");
+                const errorAlert = document.getElementById("errorAlert");
+
+                spinner.style.display = "inline-block";
+                buttonText.style.display = "none";
+                errorAlert.classList.add("d-none");
+
+                try {
+                    const response = await fetch(
+                        `/search?query=${encodeURIComponent(query)}`
+                    );
+                    const data = await response.json();
+
+                    if (data.hata) {
+                        throw new Error(data.hata);
+                    }
+
+                    // Sembolü denetle ve analiz fonksiyonunu çağır
+                    document.getElementById("currencySelect").value = "custom";
+
+                    // Özel bir seçenek ekle
+                    const select = document.getElementById("currencySelect");
+                    let customOption = select.querySelector(
+                        "option[value='custom']"
+                    );
+
+                    if (!customOption) {
+                        customOption = document.createElement("option");
+                        customOption.value = "custom";
+                        select.appendChild(customOption);
+                    }
+
+                    customOption.selected = true;
+                    customOption.textContent = `${data.symbol} - ${data.name}`;
+
+                    // Analizi çalıştır
+                    analyze(data.symbol);
+                } catch (error) {
+                    errorAlert.textContent = `Hata: ${error.message}`;
+                    errorAlert.classList.remove("d-none");
+                } finally {
+                    spinner.style.display = "none";
+                    buttonText.style.display = "inline-block";
+                }
             }
         </script>
     </body>
